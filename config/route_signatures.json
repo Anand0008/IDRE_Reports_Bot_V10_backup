@@ -1,0 +1,114 @@
+{
+  "version": "v10-day5a",
+  "signatures": [
+    {
+      "id": "due-dates",
+      "trigger_phrases": ["due date", "overdue", "deadline", "past due", "approaching", "urgent", "due today", "due this week"],
+      "required_entities": ["case"],
+      "parameter_extractors": [
+        {"name": "urgency", "priority_choices": ["overdue", "urgent", "warning", "approaching", "normal", "all"], "default": "all"},
+        {"name": "limit", "from_phrases": [{"match": "top\\s+(\\d+)", "extract_int": true}], "default": 10000}
+      ],
+      "idre_endpoint": "/api/reports/due-dates",
+      "method": "GET"
+    },
+    {
+      "id": "outstanding-payments",
+      "trigger_phrases": ["outstanding payment", "outstanding payments", "unpaid", "owed amount", "payment outstanding"],
+      "required_entities": ["case", "payment"],
+      "parameter_extractors": [
+        {"name": "limit", "from_phrases": [{"match": "top\\s+(\\d+)", "extract_int": true}], "default": 10000}
+      ],
+      "idre_endpoint": "/api/reports/outstanding-payments",
+      "method": "GET"
+    },
+    {
+      "id": "case-balance",
+      "trigger_phrases": ["case balance", "balance report", "negative balance", "allocated", "refunded"],
+      "required_entities": ["case"],
+      "parameter_extractors": [
+        {"name": "limit", "from_phrases": [{"match": "top\\s+(\\d+)", "extract_int": true}], "default": 50}
+      ],
+      "idre_endpoint": "/api/reports/case-balance",
+      "method": "GET"
+    },
+    {
+      "id": "unpaid-disputes",
+      "trigger_phrases": ["unpaid dispute", "unpaid disputes", "dispute payment", "neither party paid"],
+      "required_entities": ["case", "payment"],
+      "parameter_extractors": [],
+      "idre_endpoint": "/api/reports/unpaid-disputes",
+      "method": "GET"
+    },
+    {
+      "id": "idre-payouts",
+      "trigger_phrases": ["payout", "payouts", "halo", "veratru", "capitol bridge", "third-party payment", "idre payout"],
+      "required_entities": ["payment"],
+      "parameter_extractors": [
+        {"name": "search", "regex": "(capitol bridge|halo|veratru|halomd|unitedhealthcare|uhc|pacifichealth)"}
+      ],
+      "idre_endpoint": "/api/reports/idre-payouts",
+      "method": "GET"
+    },
+    {
+      "id": "dashboard-stats",
+      "trigger_phrases": ["dashboard", "quick stats", "overview", "kpi", "summary"],
+      "required_entities": [],
+      "parameter_extractors": [],
+      "idre_endpoint": "/api/reports/dashboard-stats",
+      "method": "GET"
+    },
+    {
+      "id": "cms-payments",
+      "trigger_phrases": ["cms payment", "cms payments", "cms admin fee", "cms fee", "medicare"],
+      "required_entities": ["payment"],
+      "parameter_extractors": [
+        {"name": "limit", "from_phrases": [{"match": "top\\s+(\\d+)", "extract_int": true}], "default": 10000}
+      ],
+      "idre_endpoint": "/api/reports/cms-payments",
+      "method": "GET"
+    },
+    {
+      "id": "case-analytics",
+      "trigger_phrases": ["case analytics", "case volume", "case trend", "case breakdown", "outcomes", "resolution time"],
+      "required_entities": ["case"],
+      "parameter_extractors": [],
+      "idre_endpoint": "/api/reports/case-analytics",
+      "method": "GET"
+    },
+    {
+      "id": "team-performance",
+      "trigger_phrases": ["team performance", "arbitrator performance", "caseload", "workload", "productivity", "cases per arbitrator"],
+      "required_entities": ["user"],
+      "parameter_extractors": [],
+      "idre_endpoint": "/api/reports/team-performance",
+      "method": "GET"
+    },
+    {
+      "id": "recent-activity",
+      "trigger_phrases": ["recent activity", "recent activities", "activity feed", "latest activity", "latest changes"],
+      "required_entities": ["case"],
+      "parameter_extractors": [
+        {"name": "limit", "from_phrases": [{"match": "top\\s+(\\d+)", "extract_int": true}], "default": 50}
+      ],
+      "idre_endpoint": "/api/reports/recent-activity",
+      "method": "GET"
+    },
+    {
+      "id": "auditing/daily-funds",
+      "trigger_phrases": ["daily funds", "incoming funds", "outgoing funds", "net cash position", "cash position"],
+      "required_entities": ["payment"],
+      "parameter_extractors": [],
+      "idre_endpoint": "/api/reports/auditing/daily-funds",
+      "method": "GET"
+    },
+    {
+      "id": "auditing/daily-transactions",
+      "trigger_phrases": ["daily transaction", "daily transactions", "transactions today", "quickbooks", "7-digit"],
+      "required_entities": ["payment"],
+      "parameter_extractors": [],
+      "idre_endpoint": "/api/reports/auditing/daily-transactions",
+      "method": "GET"
+    }
+  ]
+}
